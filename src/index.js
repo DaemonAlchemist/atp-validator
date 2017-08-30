@@ -3,34 +3,38 @@
  */
 
 import config from 'atp-config';
+import validators from "./validators/index";
+
+config.setDefaults({validators});
 
 class Validator
 {
-    constructor(request) {
-        this.request = request;
+    constructor() {
         this.validators = config.get('validators');
         this._continueOnFailure = false;
         this.valid = true;
         this.errors = [];
     }
 
-    stopOnFailure() {
+    //Usage:  validate().orDie()...
+    orDie() {
         this._continueOnFailure = false;
         return this;
     }
 
-    continueOnFailure() {
+    //Usage:  validate().all()...
+    all() {
         this._continueOnFailure = true;
         return this;
     }
 
     run(validator, args) {
-        if(!this.valid && !this._continueOnFailure) return this;
-
-        const result = this.validators[validator]([this.request, ...args]);
-        if(result !== true) {
-            this.valid = false;
-            this.errors = this.errors.concat(result);
+        if(this.valid || this._continueOnFailure) {
+            const result = this.validators[validator]([...args]);
+            if(result !== true) {
+                this.valid = false;
+                this.errors = this.errors.concat(result);
+            }
         }
     }
 
@@ -46,6 +50,9 @@ class Validator
     }
 }
 
+export const error = (msg, code = 400) => ({code, msg});
+
+export const validate = (test, msg, code) => (typeof test === 'boolean' ? test : test()) || error(msg, code);
 
 export default () => {
     const validatorBase = new Validator();
