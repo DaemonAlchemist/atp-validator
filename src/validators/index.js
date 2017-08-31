@@ -2,16 +2,16 @@
  * Created by Andy on 8/29/2017.
  */
 
-import {error, validate} from "atp-validator";
+import validate from '../validate';
 
 export default {
-    minLength: (val, len, name) => validate(
+    minLength: (val, name, len) => validate(
         val.length >= len,
         name + ' must be at least ' + len + ' characters',
         400
     ),
     isAlphaNumeric: (val, name) => validate(
-        val.match(/^[a-zA-Z0-9 ]*$/) !== null,
+        /^[a-zA-Z0-9 ]*$/.test(val) !== null,
         name + ' must contain only letters and numbers',
         400
     ),
