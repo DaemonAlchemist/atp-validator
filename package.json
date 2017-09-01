@@ -13,5 +13,6 @@
   "author": "Andrew Wittrock",
   "license": "MIT",
   "dependencies": {
+    "atp-config": "git+https://github.com/DaemonAlchemist/atp-config.git"
   }
 }

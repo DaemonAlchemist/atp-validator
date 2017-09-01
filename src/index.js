@@ -16,25 +16,45 @@ class Validator
         this._continueOnFailure = false;
         this.valid = true;
         this.errors = [];
+        this.status = {};
+        this.currentSet = "";
+        this.dependenciesValid = true;
     }
 
-    //Usage:  validate().orDie()...
-    orDie() {
-        this._continueOnFailure = false;
+    reset(name, continueOnFailure) {
+        this._continueOnFailure = continueOnFailure;
+        this.valid = true;
+        this.currentSet = name;
+        this.status[name] = true;
+        this.dependenciesValid = true;
         return this;
     }
 
+    //Usage:  validate().orDie()...
+    chain(name) {
+        return this.reset(name, false);
+    }
+
     //Usage:  validate().all()...
-    all() {
-        this._continueOnFailure = true;
+    all(name) {
+        return this.reset(name, true);
+    }
+
+    if(names) {
+        this.valid = this.status[this.currentSet] = this.dependenciesValid = names.reduce(
+            (valid, name) => valid && typeof this.status[name] !== 'undefined' && this.status[name],
+            true
+        );
         return this;
     }
 
     run(validator, args) {
-        if(this.valid || this._continueOnFailure) {
+        if(this.dependenciesValid && (this.valid || this._continueOnFailure)) {
+            console.log(validator);
             const result = this.validators[validator](...args);
             if(result !== true) {
                 this.valid = false;
+                this.status[this.currentSet] = false;
                 this.errors = this.errors.concat(result);
             }
         }
