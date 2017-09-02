@@ -4,4 +4,19 @@
 
 import error from "./error";
 
-export default (test, msg, code) => (typeof test === 'boolean' ? test : test()) || error(msg, code);
+export default (test, msg, code) => (typeof test === 'boolean')
+    ? new Promise((resolve, reject) => {
+        test ? resolve() : reject(error(msg, code));
+    })
+    : new Promise((resolve, reject) => {
+        new Promise(test).then(
+            resolve,
+            function() {
+                if(arguments.length > 0) {
+                    reject([...arguments]);
+                } else {
+                    reject(error(msg, code));
+                }
+            }
+        );
+    });
