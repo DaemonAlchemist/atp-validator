@@ -18,6 +18,7 @@ class Validator
         this.currentSet = "";
         this.validatorSets = {};
         this.validatorChains = {};
+        this.chain("default");
     }
 
     reset(name, continueOnFailure) {
