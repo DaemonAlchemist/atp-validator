@@ -4,6 +4,16 @@
 
 import assert from 'assert';
 import validator from 'atp-validator';
+import {validate} from 'atp-validator';
+import config from 'atp-config';
+
+config.setDefaults({
+    validators: {
+        fail: validate(false, "This should always fail", 500),
+        pass: validate(true, "This should always pass", 500)
+    }
+});
+
 
 describe('ATP-Validator', () => {
     describe('builtin', () => {
@@ -302,11 +312,117 @@ describe('ATP-Validator', () => {
             });
         });
     });
-    describe.skip("#chain", () => {
-        it('should have tests', () => {});
+    describe("#chain", () => {
+        it('should pass if all tests pass', done => {
+            validator().chain("test")
+                .isInteger(123, "test")
+                .isAlphaNumeric("abc 123", "test")
+                .then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+        });
+
+        it('should fail if ANY test fails', done => {
+            validator().chain("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc 123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should fail if ANY test fails', done => {
+            validator().chain("test")
+                .isInteger(123, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should fail if ALL tests fail', done => {
+            validator().chain("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should only return the first error if multiple tests fail', done => {
+            validator().chain("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1 && errors[0].msg === 'test must be an integer'
+                            ? done()
+                            : done(new Error());
+                    }
+                );
+        });
     });
-    describe.skip("#all", () => {
-        it('should have tests', () => {});
+    describe("#all", () => {
+        it('should pass if all tests pass', done => {
+            validator().all("test")
+                .isInteger(123, "test")
+                .isAlphaNumeric("abc 123", "test")
+                .then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+        });
+
+        it('should fail if ANY test fails', done => {
+            validator().all("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc 123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should fail if ANY test fails', done => {
+            validator().all("test")
+                .isInteger(123, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should fail if ALL tests fail', done => {
+            validator().all("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+        });
+
+        it('should return all errors if multiple tests fail', done => {
+            validator().all("test")
+                .isInteger(123.456, "test")
+                .isAlphaNumeric("abc#123", "test")
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 2
+                        && errors[0].msg === 'test must be an integer'
+                        && errors[1].msg === 'test must contain only letters and numbers'
+                            ? done()
+                            : done(new Error());
+                    }
+                );
+        });
     });
     describe.skip("#complex validations", () => {
         it('should have tests', () => {});
