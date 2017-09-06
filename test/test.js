@@ -9,8 +9,7 @@ import config from 'atp-config';
 
 config.setDefaults({
     validators: {
-        fail: validate(false, "This should always fail", 500),
-        pass: validate(true, "This should always pass", 500)
+        shouldNotRun: done => validate(() => {done(new Error())}, "This should never run", 500)
     }
 });
 
@@ -364,6 +363,16 @@ describe('ATP-Validator', () => {
                             ? done()
                             : done(new Error());
                     }
+                );
+        });
+
+        it('should not run subsequent tests if one fails', done => {
+            validator().chain("test")
+                .isInteger(123.456, "test")
+                .shouldNotRun(done)
+                .then(
+                    () => {done();},
+                    () => {done();},
                 );
         });
     });
