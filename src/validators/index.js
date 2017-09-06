@@ -11,7 +11,7 @@ export default {
         400
     ),
     isAlphaNumeric: (val, name) => validate(
-        /^[a-zA-Z0-9 ]*$/.test(val),
+        ["string", "number"].includes(typeof val) && /^[a-zA-Z0-9 ]*$/.test(val),
         name + ' must contain only letters and numbers',
         400
     ),
