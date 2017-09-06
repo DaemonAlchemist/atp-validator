@@ -9,7 +9,14 @@ import config from 'atp-config';
 
 config.setDefaults({
     validators: {
-        shouldNotRun: done => validate(() => {done(new Error())}, "This should never run", 500)
+        shouldNotRun: done => validate(() => {done(new Error())}, "This should never run", 500),
+        customFailureMessage: () => validate((resolve, reject) => {
+            reject({code: 401, msg: "This is a custom failure message"});
+        }, "This message should not show", 500),
+
+        callbackValidator: status => validate((resolve, reject) => {
+            status ? resolve() : reject();
+        }, "This message should show", 401),
     }
 });
 
@@ -431,6 +438,53 @@ describe('ATP-Validator', () => {
                             : done(new Error());
                     }
                 );
+        });
+    });
+    describe("#custom validators", () => {
+        it('should fail properly for missing validators', done => {
+            validator().chain("test").thisValidatorDoesntExist().then(
+                () => {done(new Error());},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 500
+                    && errors[0].msg === "Missing validator thisValidatorDoesntExist"
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            );
+        });
+    });
+
+    describe("#callback validators", () => {
+        it('should properly handle callback validators', done => {
+            validator().chain("test").callbackValidator(false).then(
+                () => {done(new Error());},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 401
+                    && errors[0].msg === "This message should show"
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            );
+        });
+        it('should properly handle callback validators', done => {
+            validator().chain("test").callbackValidator(true).then(
+                () => {done();},
+                () => {done(new Error());}
+            )
+        });
+        it('should pass through custom failure messages', done => {
+            validator().chain("test").customFailureMessage().then(
+                () => {done(new Error());},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 401
+                    && errors[0].msg === "This is a custom failure message"
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            )
         });
     });
     describe.skip("#complex validations", () => {
