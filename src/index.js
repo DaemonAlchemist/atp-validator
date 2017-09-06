@@ -46,7 +46,10 @@ class Validator
 
     enqueueValidator(name, args) {
         this.validatorSets[this.currentSet].validators.push(() => new Promise((resolve, reject) => {
-            this.validators[name](...args)
+            (typeof this.validators[name] !== 'undefined'
+                ? this.validators[name]
+                : () => validate(false, "Missing validator " + name, 500)
+            )(...args)
                 .then(resolve)
                 .catch(errors => {
                     this.errors = this.errors.concat(errors);
