@@ -42,7 +42,7 @@ describe('ATP-Validator', () => {
                    () => {done(new Error());}
                );
            });
-       });
+        });
         describe("#minLength", () => {
             it('should fail for too short strings', done => {
                 validator().minLength("a", "test", 2).then(
@@ -142,12 +142,165 @@ describe('ATP-Validator', () => {
                 );
             })
        });
-        describe.skip("#isAlphaNumeric", () => {
-           it('should have tests', () => {});
+        describe("#isAlphaNumeric", () => {
+            it('should fail for null values', done => {
+                validator().isAlphaNumeric(null, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for undefined values', done => {
+                validator().isAlphaNumeric(undefined, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should pass for numbers', done => {
+                validator().isAlphaNumeric(123, "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            it('should pass for empty strings', done => {
+                validator().isAlphaNumeric("", "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            it('should allow letters, number, and spaces', done => {
+                const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+                validator().isAlphaNumeric(str, "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            "`~!@#$%^&*()_-+={[}]|\\:;\"'?/>.<,".split("").forEach(char => {
+                it('should not allow the character ' + char, done => {
+                    validator().isAlphaNumeric(char, "test").then(
+                        () => {done(new Error());},
+                        () => {done();}
+                    );
+                });
+            });
+
+            it('should fail for objects', done => {
+                validator().isAlphaNumeric({a: 1, b: 2, c: 3}, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for booleans', done => {
+                validator().isAlphaNumeric(true, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for booleans', done => {
+                validator().isAlphaNumeric(false, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for arrays', done => {
+                validator().isAlphaNumeric(["a", "b", "c"], "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
        });
-        describe.skip("#isInteger", () => {
-           it('should have tests', () => {});
-       });
+        describe("#isInteger", () => {
+            it('should fail for null values', done => {
+                validator().isinteger(null, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for undefined values', done => {
+                validator().isInteger(undefined, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for objects', done => {
+                validator().isInteger({a: 1, b: 2, c: 3}, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for booleans', done => {
+                validator().isInteger(true, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for booleans', done => {
+                validator().isInteger(false, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for arrays', done => {
+                validator().isInteger(["a", "b", "c"], "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for strings', done => {
+                validator().isInteger("123", "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should pass for integers', done => {
+                validator().isInteger(123, "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            it('should pass for zero', done => {
+                validator().isInteger(0, "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            it('should pass for negative integers', done => {
+                validator().isInteger(-123, "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+
+            it('should fail for non-integers', done => {
+                validator().isInteger(123.456, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should fail for negative non-integers', done => {
+                validator().isInteger(-123.456, "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+        });
     });
     describe.skip("#chain", () => {
         it('should have tests', () => {});
