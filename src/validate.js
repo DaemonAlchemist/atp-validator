@@ -11,12 +11,6 @@ export default (test, msg, code) => (typeof test === 'boolean')
     : new Promise((resolve, reject) => {
         new Promise(test).then(
             resolve,
-            function() {
-                if(arguments.length > 0) {
-                    reject([...arguments]);
-                } else {
-                    reject(error(msg, code));
-                }
-            }
+            err => {typeof err !== 'undefined' ? reject(err) : reject(error(msg, code));}
         );
     });
