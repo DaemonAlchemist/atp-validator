@@ -56,24 +56,26 @@ class Validator
     }
 
     build() {
-        this.validatorChains = o(this.validatorSets).reduce((combined, set, key) => {
-            let setChain = set.type === 'all'
-                ? () => Promise.all(set.validators.map(val => val()))
-                : set.validators.reduce((chain, validator) => () => new Promise((resolve, reject) => {
-                    chain().then(() => {validator().then(resolve, reject);}).catch(reject)
-                }));
+        this.validatorChains = o(this.validatorSets)
+            .filter(set => set.validators.length > 0)
+            .reduce((combined, set, key) => {
+                let setChain = set.type === 'all'
+                    ? () => Promise.all(set.validators.map(val => val()))
+                    : set.validators.reduce((chain, validator) => () => new Promise((resolve, reject) => {
+                        chain().then(() => {validator().then(resolve, reject);}).catch(reject)
+                    }));
 
-            if(set.dependencies.length > 0) {
-                const oldChain = setChain;
-                setChain = () => new Promise((resolve, reject) => {
-                    Promise.all(set.dependencies.map(name => this.validatorChains[name]()))
-                        .then(() => {oldChain().then(resolve, reject);})
-                        .catch(reject);
-                });
-            }
+                if(set.dependencies.length > 0) {
+                    const oldChain = setChain;
+                    setChain = () => new Promise((resolve, reject) => {
+                        Promise.all(set.dependencies.map(name => this.validatorChains[name]()))
+                            .then(() => {oldChain().then(resolve, reject);})
+                            .catch(reject);
+                    });
+                }
 
-            return combined.merge({[key]: setChain});
-        }, o({})).raw;
+                return combined.merge({[key]: setChain});
+            }, o({})).raw;
     }
 
     then(resolve = () => {}, reject = () => {}) {
