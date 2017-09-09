@@ -59,6 +59,7 @@ describe('ATP-Validator', () => {
                );
            });
         });
+
         describe("#minLength", () => {
             it('should fail for too short strings', done => {
                 validator().minLength("a", "test", 2).then(
@@ -158,6 +159,7 @@ describe('ATP-Validator', () => {
                 );
             })
        });
+
         describe("#isAlphaNumeric", () => {
             it('should fail for null values', done => {
                 validator().isAlphaNumeric(null, "test").then(
@@ -232,6 +234,7 @@ describe('ATP-Validator', () => {
                 );
             });
        });
+
         describe("#isInteger", () => {
             it('should fail for null values', done => {
                 validator().isinteger(null, "test").then(
@@ -318,6 +321,7 @@ describe('ATP-Validator', () => {
             });
         });
     });
+
     describe("#chain", () => {
         it('should pass if all tests pass', done => {
             validator().chain("test")
@@ -383,6 +387,7 @@ describe('ATP-Validator', () => {
                 );
         });
     });
+
     describe("#all", () => {
         it('should pass if all tests pass', done => {
             validator().all("test")
@@ -440,6 +445,7 @@ describe('ATP-Validator', () => {
                 );
         });
     });
+
     describe("#custom validators", () => {
         it('should fail properly for missing validators', done => {
             validator().chain("test").thisValidatorDoesntExist().then(
@@ -468,12 +474,14 @@ describe('ATP-Validator', () => {
                 }
             );
         });
+
         it('should properly handle callback validators', done => {
             validator().chain("test").callbackValidator(true).then(
                 () => {done();},
                 () => {done(new Error());}
             )
         });
+
         it('should pass through custom failure messages', done => {
             validator().chain("test").customFailureMessage().then(
                 () => {done(new Error());},
@@ -487,7 +495,60 @@ describe('ATP-Validator', () => {
             )
         });
     });
-    describe.skip("#complex validations", () => {
-        it('should have tests', () => {});
+
+    describe("#complex validations", () => {
+        it('should skip chains whose dependencies fail', done => {
+            validator()
+                .chain("first")
+                    .isInteger(123.456, "test")
+                .chain("second").if(["first"])
+                    .shouldNotRun(done)
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 400
+                        && errors[0].msg === "test must be an integer"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should run chains whose dependencies pass', done => {
+            validator()
+                .chain("first")
+                    .isInteger(123, "test")
+                .chain("second").if(["first"])
+                    .customFailureMessage()
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 401
+                        && errors[0].msg === "This is a custom failure message"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should accept a string if a chain only has one dependency', done => {
+            validator()
+                .chain("first")
+                    .isInteger(123, "test")
+                .chain("second").if("first")
+                    .customFailureMessage()
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 401
+                        && errors[0].msg === "This is a custom failure message"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
     });
 });
