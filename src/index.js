@@ -40,7 +40,7 @@ class Validator
     }
 
     if(names) {
-        this.validatorSets[this.currentSet].dependencies = names;
+        this.validatorSets[this.currentSet].dependencies = [].concat(names);
         return this;
     }
 
