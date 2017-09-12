@@ -25,6 +25,7 @@ class Validator
         this.currentSet = name;
         this.validatorSets[name] = {
             type: continueOnFailure ? "all" : "chain",
+            suppressErrors: false,
             dependencies: [],
             validators: []
         };
@@ -39,20 +40,47 @@ class Validator
         return this.reset(name, true);
     }
 
-    if(names) {
-        this.validatorSets[this.currentSet].dependencies = [].concat(names);
+    silence() {
+        this.current().suppressErrors = true;
         return this;
     }
 
+    unsilence() {
+        this.current().suppressErrors = true;
+        return this;
+    }
+
+    current() {
+        return this.validatorSets[this.currentSet];
+    }
+
+    optional(value, name) {
+        return this.chain(name).silence().missing(value);
+    }
+
+    if(names) {
+        this.current().dependencies = [].concat(names);
+        this.current().dependencyType = "all";
+        return this;
+    }
+
+    any(names) {
+        this.current().dependencies = [].concat(names);
+        this.current().dependencyType = "any";
+        return this;
+    }
+    
     enqueueValidator(name, args) {
-        this.validatorSets[this.currentSet].validators.push(() => new Promise((resolve, reject) => {
+        this.current().validators.push(() => new Promise((resolve, reject) => {
             (typeof this.validators[name] !== 'undefined'
                 ? this.validators[name]
                 : () => validate(false, "Missing validator " + name, 500)
             )(...args)
                 .then(resolve)
                 .catch(errors => {
-                    this.errors = this.errors.concat(errors);
+                    if(!this.current().suppressErrors) {
+                        this.errors = this.errors.concat(errors);
+                    }
                     reject();
                 });
         }));
@@ -71,6 +99,7 @@ class Validator
                 if(set.dependencies.length > 0) {
                     const oldChain = setChain;
                     setChain = () => new Promise((resolve, reject) => {
+                        //TODO:  Handle 'any' condition rather than 'all'
                         Promise.all(set.dependencies.map(name => this.validatorChains[name]()))
                             .then(() => {oldChain().then(resolve, reject);})
                             .catch(reject);
