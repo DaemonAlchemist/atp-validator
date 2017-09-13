@@ -56,23 +56,6 @@ class Validator
         return this.validatorSets[this.currentSet];
     }
 
-    optional(value, callback) {
-        return validate(
-            (resolve, reject) => {
-                if(typeof value === 'undefined') {
-                    resolve();
-                } else {
-                    callback(validator(), value).then(
-                        resolve,
-                        errors => {reject(errors);}
-                    );
-                }
-            },
-            "",
-            200
-        )
-    }
-
     if(names) {
         this.current().dependencies = [].concat(names);
         this.current().dependencyType = "all";

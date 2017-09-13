@@ -3,6 +3,7 @@
  */
 
 import validate from '../validate';
+import validator from "atp-validator";
 
 export default {
     minLength: (val, name, len) => validate(
@@ -44,6 +45,20 @@ export default {
         val < threshold,
         name + " must be less than " + threshold,
         400
+    ),
+    optional: (value, callback) => validate(
+        (resolve, reject) => {
+            if(typeof value === 'undefined') {
+                resolve();
+            } else {
+                callback(validator(), value).then(
+                    resolve,
+                    errors => {reject(errors);}
+                );
+            }
+        },
+        "",
+        200
     ),
     pass: () => validate(true, "", 200)
 }
