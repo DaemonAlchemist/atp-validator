@@ -320,6 +320,24 @@ describe('ATP-Validator', () => {
                 );
             });
         });
+
+        describe.skip("#matches", () => {
+            it('should have tests', () => {});
+        });
+
+        describe.skip("#missing", () => {
+            it('should have tests', () => {});
+        });
+
+        describe.skip("#greaterThan", () => {
+            it('should have tests', () => {});
+        });
+        describe.skip("#lessThan", () => {
+            it('should have tests', () => {});
+        });
+        describe.skip("#pass", () => {
+            it('should have tests', () => {});
+        });
     });
 
     describe("#chain", () => {
@@ -550,5 +568,7 @@ describe('ATP-Validator', () => {
                     }
                 );
         });
+
+        it.skip('should pass if any dependency passes for "any" dependencies', () => {});
     });
 });
