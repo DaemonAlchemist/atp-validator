@@ -189,8 +189,8 @@ describe('ATP-Validator', () => {
                 );
             });
 
-            it('should allow letters, number, and spaces', done => {
-                const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+            it('should allow letters and numbers', done => {
+                const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 validator().isAlphaNumeric(str, "test").then(
                     () => {done();},
                     () => {done(new Error());}
@@ -326,17 +326,17 @@ describe('ATP-Validator', () => {
         it('should pass if all tests pass', done => {
             validator().chain("test")
                 .isInteger(123, "test")
-                .isAlphaNumeric("abc 123", "test")
+                .isAlphaNumeric("abc123", "test")
                 .then(
                     () => {done();},
-                    () => {done(new Error());}
+                    errors => {done(new Error(JSON.stringify(errors)));}
                 );
         });
 
         it('should fail if ANY test fails', done => {
             validator().chain("test")
                 .isInteger(123.456, "test")
-                .isAlphaNumeric("abc 123", "test")
+                .isAlphaNumeric("abc123", "test")
                 .then(
                     () => {done(new Error());},
                     () => {done();}
@@ -392,7 +392,7 @@ describe('ATP-Validator', () => {
         it('should pass if all tests pass', done => {
             validator().all("test")
                 .isInteger(123, "test")
-                .isAlphaNumeric("abc 123", "test")
+                .isAlphaNumeric("abc123", "test")
                 .then(
                     () => {done();},
                     () => {done(new Error());}
@@ -402,7 +402,7 @@ describe('ATP-Validator', () => {
         it('should fail if ANY test fails', done => {
             validator().all("test")
                 .isInteger(123.456, "test")
-                .isAlphaNumeric("abc 123", "test")
+                .isAlphaNumeric("abc123", "test")
                 .then(
                     () => {done(new Error());},
                     () => {done();}
