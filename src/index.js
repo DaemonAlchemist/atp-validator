@@ -18,13 +18,13 @@ class Validator
         this.currentSet = "";
         this.validatorSets = {};
         this.validatorChains = {};
-        this.chain("default");
+        this.for("default");
     }
 
-    reset(name, continueOnFailure) {
+    for(name) {
         this.currentSet = name;
         this.validatorSets[name] = {
-            type: continueOnFailure ? "all" : "chain",
+            continueOnFailure: false,
             suppressErrors: false,
             dependencies: [],
             validators: []
@@ -32,12 +32,14 @@ class Validator
         return this;
     }
 
-    chain(name) {
-        return this.reset(name, false);
+    inSeries() {
+        this.current().continueOnFailure = false;
+        return this;
     }
 
-    all(name) {
-        return this.reset(name, true);
+    inParallel() {
+        this.current().continueOnFailure = true;
+        return this;
     }
 
     silence() {
@@ -54,8 +56,21 @@ class Validator
         return this.validatorSets[this.currentSet];
     }
 
-    optional(value, name) {
-        return this.chain(name).silence().missing(value);
+    optional(value, callback) {
+        return validate(
+            (resolve, reject) => {
+                if(typeof value === 'undefined') {
+                    resolve();
+                } else {
+                    callback(validator(), value).then(
+                        resolve,
+                        errors => {reject(errors);}
+                    );
+                }
+            },
+            "",
+            200
+        )
     }
 
     if(names) {
@@ -87,10 +102,16 @@ class Validator
     }
 
     build() {
+        o(this.validatorSets).filter(set => set.validators.length === 0).map((set, key) => {
+            const origKey = this.currentSet;
+            this.for(key).pass();
+            this.currentSet = origKey;
+        });
+
         this.validatorChains = o(this.validatorSets)
             .filter(set => set.validators.length > 0)
             .reduce((combined, set, key) => {
-                let setChain = set.type === 'all'
+                let setChain = set.continueOnFailure
                     ? () => Promise.all(set.validators.map(val => val()))
                     : set.validators.reduce((chain, validator) => () => new Promise((resolve, reject) => {
                         chain().then(() => {validator().then(resolve, reject);}).catch(reject)
@@ -117,7 +138,7 @@ class Validator
     }
 }
 
-export default () => {
+export default function validator() {
     const validatorBase = new Validator();
 
     const validator = new Proxy(validatorBase, {
