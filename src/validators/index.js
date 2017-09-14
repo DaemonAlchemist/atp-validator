@@ -46,7 +46,7 @@ export default {
         name + " must be less than " + threshold,
         400
     ),
-    optional: (value, callback) => validate(
+    isOptional: (value, callback) => validate(
         (resolve, reject) => {
             if(typeof value === 'undefined') {
                 resolve();

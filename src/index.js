@@ -18,10 +18,10 @@ class Validator
         this.currentSet = "";
         this.validatorSets = {};
         this.validatorChains = {};
-        this.for("default");
+        this.check("default");
     }
 
-    for(name) {
+    check(name) {
         this.currentSet = name;
         this.validatorSets[name] = {
             continueOnFailure: false,
@@ -87,7 +87,7 @@ class Validator
     build() {
         o(this.validatorSets).filter(set => set.validators.length === 0).map((set, key) => {
             const origKey = this.currentSet;
-            this.for(key).pass();
+            this.check(key).pass();
             this.currentSet = origKey;
         });
 
