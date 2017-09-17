@@ -7,7 +7,7 @@
     "test": "npm run compile && mocha --compilers js:babel-core/register",
     "test-quick": "mocha --compilers js:babel-core/register",
     "test-clean": "npm install && npm test && rm -rf node_modules",
-    "compile": "babel --presets es2015 -d lib/ src/",
+    "compile": "babel --presets env -d lib/ src/",
     "prepublish": "npm run compile",
     "new-tag": "git push && git push origin --tags && npm publish",
     "major": "npm version major && npm run new-tag",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "chai": "^4.1.2",
     "mocha": "^3.5.0"
   }
