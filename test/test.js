@@ -14,9 +14,17 @@ config.setDefaults({
             reject({code: 401, msg: "This is a custom failure message"});
         }, "This message should not show", 500),
 
-        callbackValidator: status => validate((resolve, reject) => {
-            status ? resolve() : reject();
-        }, "This message should show", 401),
+        callbackValidator: status => validate(
+            (resolve, reject) => {status ? resolve() : reject();},
+            "This message should show",
+            401
+        ),
+
+        promiseValidator: status => validate(
+            new Promise((resolve, reject) => {status ? resolve() : reject();}),
+            "This message should show",
+            401
+        ),
     }
 });
 
@@ -24,35 +32,35 @@ config.setDefaults({
 describe('ATP-Validator', () => {
     describe('builtin', () => {
         describe("#required", () => {
-           it('should fail check missing parameters', done => {
+           it('should fail for missing parameters', done => {
                validator().required(undefined, "name").then(
                    () => {done(new Error());},
                    () => {done();}
                );
            });
 
-           it('should pass check provided parameters', done => {
+           it('should pass for provided parameters', done => {
                validator().required("someValue", "name").then(
                    () => {done();},
                    errors => {done(new Error(errors));}
                );
            });
 
-           it('should fail check empty strings', done => {
+           it('should fail for empty strings', done => {
                validator().required("", "name").then(
                    () => {done(new Error());},
                    () => {done();}
                );
            });
 
-           it('should fail check null values', done => {
+           it('should fail for null values', done => {
                validator().required(null, "name").then(
                    () => {done(new Error());},
                    () => {done();}
                );
            });
 
-           it('should pass check zero', done => {
+           it('should pass for zero', done => {
                validator().required(0, "name").then(
                    () => {done();},
                    () => {done(new Error());}
@@ -61,98 +69,98 @@ describe('ATP-Validator', () => {
         });
 
         describe("#minLength", () => {
-            it('should fail check too short strings', done => {
+            it('should fail for too short strings', done => {
                 validator().minLength("a", "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check empty strings', done => {
+            it('should fail for empty strings', done => {
                 validator().minLength("", "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check null values', done => {
+            it('should fail for null values', done => {
                 validator().minLength(null, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check undefined values', done => {
+            it('should fail for undefined values', done => {
                 validator().minLength(undefined, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check numbers', done => {
+            it('should fail for numbers', done => {
                 validator().minLength(123, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check objects', done => {
+            it('should fail for objects', done => {
                 validator().minLength({a: 1, b: 2, c: 3}, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().minLength(true, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().minLength(false, "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check too short arrays', done => {
+            it('should fail fpr too short arrays', done => {
                 validator().minLength(["a"], "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check empty arrays', done => {
+            it('should fail for empty arrays', done => {
                 validator().minLength([], "test", 2).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it("should pass check longer arrays", done => {
+            it("should pass for longer arrays", done => {
                 validator().minLength(["a", "b", "c"], "test", 2).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it("should pass check exact length arrays", done => {
+            it("should pass for exact length arrays", done => {
                 validator().minLength(["a", "b"], "test", 2).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it("should pass check longer strings", done => {
+            it("should pass for longer strings", done => {
                 validator().minLength("abc", "test", 2).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it("should pass check exact length strings", done => {
+            it("should pass for exact length strings", done => {
                 validator().minLength("ab", "test", 2).then(
                     () => {done();},
                     () => {done(new Error());}
@@ -626,7 +634,7 @@ describe('ATP-Validator', () => {
     });
 
     describe("#custom validators", () => {
-        it('should fail properly check missing validators', done => {
+        it('should fail properly for missing validators', done => {
             validator().check("test").thisValidatorDoesntExist().then(
                 () => {done(new Error());},
                 errors => {
@@ -656,6 +664,26 @@ describe('ATP-Validator', () => {
 
         it('should properly handle callback validators', done => {
             validator().check("test").callbackValidator(true).then(
+                () => {done();},
+                () => {done(new Error());}
+            )
+        });
+
+        it('should properly handle promise validators', done => {
+            validator().check("test").promiseValidator(false).then(
+                () => {done(new Error());},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 401
+                    && errors[0].msg === "This message should show"
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            );
+        });
+
+        it('should properly handle promise validators', done => {
+            validator().check("test").promiseValidator(true).then(
                 () => {done();},
                 () => {done(new Error());}
             )
