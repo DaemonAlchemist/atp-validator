@@ -25,6 +25,11 @@ config.setDefaults({
             "This message should show",
             401
         ),
+        brokenValidator: () => validate(
+            (resolve, reject) => {throw new Error("This validator is broken")},
+            "This is the message for the broken validator",
+            400
+        )
     }
 });
 
@@ -486,7 +491,7 @@ describe('ATP-Validator', () => {
                         errors.length === 1 &&
                         errors[0].code === 400 &&
                         errors[0].msg === "test must be an integer"
-                            ? done() : done(new Error());
+                            ? done() : done(new Error(JSON.stringify(errors)));
                     }
                 );
             });
@@ -756,6 +761,21 @@ describe('ATP-Validator', () => {
                             : done(new Error(JSON.stringify(errors)));
                     }
                 );
+        });
+    });
+
+    describe("#error handling", () => {
+        it('should properly intercept exceptions from validators', done => {
+            validator().brokenValidator().then(
+                () => {done(new Error());},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 500
+                    && errors[0].msg.indexOf("There was a problem with the brokenValidator validator") === 0
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            )
         });
     });
 });

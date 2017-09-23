@@ -7,6 +7,7 @@ import validators from './validators/index';
 import validate from './validate';
 import error from './error';
 import {o} from 'atp-sugar';
+import typeOf from 'typeof';
 
 config.setDefaults({validators});
 
@@ -67,6 +68,11 @@ class Validator
         this.current().dependencyType = "any";
         return this;
     }
+
+    validateErrors(errors) {
+        return typeOf(errors) === 'object' && errors.code && errors.msg ||
+                typeOf(errors) === 'array' && errors.reduce((result, e) => result && this.validateErrors(e), true);
+    }
     
     enqueueValidator(name, args) {
         this.current().validators.push(() => new Promise((resolve, reject) => {
@@ -76,8 +82,15 @@ class Validator
             )(...args)
                 .then(resolve)
                 .catch(errors => {
-                    if(!this.current().suppressErrors) {
-                        this.errors = this.errors.concat(errors);
+                    if(this.validateErrors(errors)) {
+                        if(!this.current().suppressErrors) {
+                            this.errors = this.errors.concat(errors);
+                        }
+                    } else {
+                        this.errors = this.errors.concat({
+                            code: 500,
+                            msg: "There was a problem with the " + name + " validator: " + JSON.stringify(errors)
+                        });
                     }
                     reject();
                 });
