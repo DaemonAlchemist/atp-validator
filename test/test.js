@@ -785,7 +785,7 @@ describe('ATP-Validator', () => {
                 errors => {
                     errors.length === 1
                     && errors[0].code === 500
-                    && errors[0].msg.indexOf("There was a problem with the brokenValidator validator") === 0
+                    && errors[0].msg.indexOf("There was a problem with the brokenValidator validator: Error: This validator is broken") === 0
                         ? done()
                         : done(new Error(JSON.stringify(errors)));
                 }

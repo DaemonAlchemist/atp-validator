@@ -89,7 +89,8 @@ class Validator
                     } else {
                         this.errors = this.errors.concat({
                             code: 500,
-                            msg: "There was a problem with the " + name + " validator: " + JSON.stringify(errors)
+                            msg: "There was a problem with the " + name + " validator: "
+                                + (errors.toString ? errors.toString() : JSON.stringify(errors))
                         });
                     }
                     reject();
