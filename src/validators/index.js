@@ -22,7 +22,7 @@ export default {
         400
     ),
     isInteger: (val, name) => validate(
-        Number.isInteger(val),
+        Number.isInteger(val) || /^[0-9]+$/.test(val),
         name + ' must be an integer',
         400
     ),

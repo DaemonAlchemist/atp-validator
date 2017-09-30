@@ -292,10 +292,24 @@ describe('ATP-Validator', () => {
             });
 
             it('should fail for strings', done => {
-                validator().isInteger("123", "test").then(
+                validator().isInteger("abc", "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
+            });
+
+            it('should fail for empty strings', done => {
+                validator().isInteger("", "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+
+            it('should pass for integer strings', done => {
+                validator().isInteger("123", "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                )
             });
 
             it('should pass for integers', done => {
