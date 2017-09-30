@@ -174,28 +174,28 @@ describe('ATP-Validator', () => {
        });
 
         describe("#isAlphaNumeric", () => {
-            it('should fail check null values', done => {
+            it('should fail for null values', done => {
                 validator().isAlphaNumeric(null, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check undefined values', done => {
+            it('should fail for undefined values', done => {
                 validator().isAlphaNumeric(undefined, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should pass check numbers', done => {
+            it('should pass for numbers', done => {
                 validator().isAlphaNumeric(123, "test").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should pass check empty strings', done => {
+            it('should pass for empty strings', done => {
                 validator().isAlphaNumeric("", "test").then(
                     () => {done();},
                     () => {done(new Error());}
@@ -219,28 +219,28 @@ describe('ATP-Validator', () => {
                 });
             });
 
-            it('should fail check objects', done => {
+            it('should fail for objects', done => {
                 validator().isAlphaNumeric({a: 1, b: 2, c: 3}, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().isAlphaNumeric(true, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().isAlphaNumeric(false, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check arrays', done => {
+            it('should fail for arrays', done => {
                 validator().isAlphaNumeric(["a", "b", "c"], "test").then(
                     () => {done(new Error());},
                     () => {done();}
@@ -249,84 +249,84 @@ describe('ATP-Validator', () => {
        });
 
         describe("#isInteger", () => {
-            it('should fail check null values', done => {
+            it('should fail for null values', done => {
                 validator().isinteger(null, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check undefined values', done => {
+            it('should fail for undefined values', done => {
                 validator().isInteger(undefined, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check objects', done => {
+            it('should fail for objects', done => {
                 validator().isInteger({a: 1, b: 2, c: 3}, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().isInteger(true, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check booleans', done => {
+            it('should fail for booleans', done => {
                 validator().isInteger(false, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check arrays', done => {
+            it('should fail for arrays', done => {
                 validator().isInteger(["a", "b", "c"], "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check strings', done => {
+            it('should fail for strings', done => {
                 validator().isInteger("123", "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should pass check integers', done => {
+            it('should pass for integers', done => {
                 validator().isInteger(123, "test").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should pass check zero', done => {
+            it('should pass for zero', done => {
                 validator().isInteger(0, "test").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should pass check negative integers', done => {
+            it('should pass for negative integers', done => {
                 validator().isInteger(-123, "test").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should fail check non-integers', done => {
+            it('should fail for non-integers', done => {
                 validator().isInteger(123.456, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check negative non-integers', done => {
+            it('should fail for negative non-integers', done => {
                 validator().isInteger(-123.456, "test").then(
                     () => {done(new Error());},
                     () => {done();}
@@ -335,14 +335,14 @@ describe('ATP-Validator', () => {
         });
 
         describe("#matches", () => {
-            it('should pass check strings that match the pattern', done => {
+            it('should pass for strings that match the pattern', done => {
                 validator().matches("123", /[0-9]*/, "message").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should fail check strings that do not match the pattern', done => {
+            it('should fail for strings that do not match the pattern', done => {
                 validator().matches("123", /[a-z]+/, "message").then(
                     () => {done(new Error());},
                     () => {done();}
@@ -358,42 +358,42 @@ describe('ATP-Validator', () => {
                 );
             });
 
-            it('should fail check values that are set', done => {
+            it('should fail for values that are set', done => {
                 validator().missing(123, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check empty strings', done => {
+            it('should fail for empty strings', done => {
                 validator().missing("", "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check null values', done => {
+            it('should fail for null values', done => {
                 validator().missing(null, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check zero', done => {
+            it('should fail for zero', done => {
                 validator().missing(0, "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check empty arrays', done => {
+            it('should fail for empty arrays', done => {
                 validator().missing([], "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check empty objects', done => {
+            it('should fail for empty objects', done => {
                 validator().missing({}, "test").then(
                     () => {done(new Error());},
                     () => {done();}
@@ -402,21 +402,21 @@ describe('ATP-Validator', () => {
         });
 
         describe("#greaterThan", () => {
-            it('should pass check valid values', done => {
+            it('should pass for valid values', done => {
                 validator().greaterThan(4, "test", 3).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should fail check invalid values', done => {
+            it('should fail for invalid values', done => {
                 validator().greaterThan(2, "test", 3).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check equal values', done => {
+            it('should fail for equal values', done => {
                 validator().greaterThan(4, "test", 4).then(
                     () => {done(new Error());},
                     () => {done();}
@@ -425,21 +425,21 @@ describe('ATP-Validator', () => {
         });
 
         describe("#lessThan", () => {
-            it('should pass check valid values', done => {
+            it('should pass for valid values', done => {
                 validator().lessThan(2, "test", 3).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should fail check invalid values', done => {
+            it('should fail for invalid values', done => {
                 validator().lessThan(4, "test", 3).then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
 
-            it('should fail check equal values', done => {
+            it('should fail for equal values', done => {
                 validator().lessThan(4, "test", 4).then(
                     () => {done(new Error());},
                     () => {done();}
@@ -448,14 +448,14 @@ describe('ATP-Validator', () => {
         });
 
         describe("#isOptional", () => {
-            it('should pass check missing values', done => {
+            it('should pass for missing values', done => {
                 validator().isOptional(undefined, () => {}).then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
 
-            it('should not run sub-validator check missing values', done => {
+            it('should not run sub-validator for missing values', done => {
                 validator().isOptional(undefined, (v, value) =>
                     v.shouldNotRun(done)
                 ).then(
