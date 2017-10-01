@@ -9,7 +9,11 @@ import error from './error';
 import {o} from 'atp-sugar';
 import typeOf from 'typeof';
 
-config.setDefaults({validators});
+export const addValidators = validators => {
+    config.setDefaults({validators});
+}
+
+addValidators(validators);
 
 class Validator
 {
@@ -76,9 +80,9 @@ class Validator
     
     enqueueValidator(name, args) {
         this.current().validators.push(() => new Promise((resolve, reject) => {
-            (typeof this.validators[name] !== 'undefined'
-                ? this.validators[name]
-                : () => validate(false, "Missing validator " + name, 500)
+            (typeof this.validators[name] === 'undefined' ? () => validate(false, "Missing validator " + name, 500) :
+             typeof this.validators[name] !== 'function'  ? () => validate(false, "Invalid validator " + name, 500) :
+                                                            this.validators[name]
             )(...args)
                 .then(resolve)
                 .catch(errors => {
@@ -136,9 +140,7 @@ class Validator
 }
 
 export default function validator() {
-    const validatorBase = new Validator();
-
-    const validator = new Proxy(validatorBase, {
+    const validator = new Proxy(new Validator(), {
         get: (target, property, reciever) => {
             return property in target ? target[property] : function() {
                 target.enqueueValidator(property, [...arguments]);

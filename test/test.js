@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 import validator from 'atp-validator';
-import {validate} from 'atp-validator';
+import {validate, addValidators} from 'atp-validator';
 import config from 'atp-config';
 
 config.setDefaults({
@@ -28,6 +28,11 @@ config.setDefaults({
         brokenValidator: () => validate(
             (resolve, reject) => {throw new Error("This validator is broken")},
             "This is the message for the broken validator",
+            400
+        ),
+        invalidValidator: validate(  //Note missing function call:  () => ...
+            true,
+            "This is the message for te invalid validator",
             400
         )
     }
@@ -663,6 +668,34 @@ describe('ATP-Validator', () => {
                         ? done()
                         : done(new Error(JSON.stringify(errors)));
                 }
+            );
+        });
+
+        it('should fail properly for invalid validators', done => {
+            validator().invalidValidator().then(
+                () => {done(new Error())},
+                errors => {
+                    errors.length === 1
+                    && errors[0].code === 500
+                    && errors[0].msg === "Invalid validator invalidValidator"
+                        ? done()
+                        : done(new Error(JSON.stringify(errors)));
+                }
+            )
+        });
+
+        it('should be able to use newly added validators', done => {
+            addValidators({
+                newValidator: () => validate(
+                    (resolve, reject) => {resolve()},
+                    "New Validator message",
+                    400
+                )
+            });
+
+            validator().newValidator().then(
+                () => {done();},
+                () => {done(new Error());}
             );
         });
     });
