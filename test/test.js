@@ -353,6 +353,10 @@ describe('ATP-Validator', () => {
             });
         });
 
+        describe.skip("#isOneOf", () => {
+            it('should have tests', () => {});
+        });
+
         describe("#matches", () => {
             it('should pass for strings that match the pattern', done => {
                 validator().matches("123", /[0-9]*/, "message").then(

@@ -6,6 +6,7 @@ import validate from '../validate';
 import validator from "atp-validator";
 
 export default {
+    custom: v => v,
     minLength: (val, name, len) => validate(
         val.length >= len,
         name + ' must be at least ' + len + ' characters',
@@ -24,6 +25,11 @@ export default {
     isInteger: (val, name) => validate(
         Number.isInteger(val) || /^[0-9]+$/.test(val),
         name + ' must be an integer',
+        400
+    ),
+    isOneOf: (val, values, name) => validate(
+        values.includes(val),
+        name + " must be one of " + JSON.stringify(values),
         400
     ),
     required: (val, name) => validate(
