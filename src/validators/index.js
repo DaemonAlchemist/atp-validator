@@ -3,7 +3,7 @@
  */
 
 import validate from '../validate';
-import validator from "atp-validator";
+import validator from "../index";
 
 export default {
     custom: v => v,
