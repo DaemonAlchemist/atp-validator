@@ -1,6 +1,3 @@
-/**
- * Created by Andrea on 8/27/2017.
- */
 
 import config from 'atp-config';
 import validators from './validators/index';
@@ -9,6 +6,11 @@ import error from './error';
 import {o} from 'atp-sugar';
 import typeOf from 'typeof';
 
+/**
+ * Register custom validators
+ * @param {Object} validators - The validators to add
+ * @example addValidators({validateThis: (a, b) => {...})
+ */
 export const addValidators = validators => {
     config.setDefaults({validators});
 }
@@ -139,6 +141,10 @@ class Validator
     }
 }
 
+/**
+ * Returns a validator instance
+ * @returns {Validator}
+ */
 export default function validator() {
     const validator = new Proxy(new Validator(), {
         get: (target, property, reciever) => {

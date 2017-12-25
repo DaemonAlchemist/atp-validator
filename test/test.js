@@ -1,6 +1,3 @@
-/**
- * Created by Andrea on 9/3/2017.
- */
 
 import assert from 'assert';
 import validator from 'atp-validator';
@@ -353,8 +350,25 @@ describe('ATP-Validator', () => {
             });
         });
 
-        describe.skip("#isOneOf", () => {
-            it('should have tests', () => {});
+        describe("#isOneOf", () => {
+            it('should pass for values that are in the array', () => {
+                validator().isOneOf(123, [123, 456], "test").then(
+                    () => {done();},
+                    () => {done(new Error());}
+                );
+            });
+            it('should fail for values that are not in the array', () => {
+                validator().isOneOf(123, [456, 789], "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            });
+            it('should fail for empty arrays of possible values', () => {
+                validator().isOneOf(123, [], "test").then(
+                    () => {done(new Error());},
+                    () => {done();}
+                );
+            })
         });
 
         describe("#matches", () => {
