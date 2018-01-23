@@ -1,0 +1,1341 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>atp-validator 0.11.2 | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='assets/split.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>atp-validator</h3>
+          <div class='mb1'><code>0.11.2</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#addvalidators'
+                  class="">
+                  addValidators
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#validator'
+                  class="">
+                  validator
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#custom'
+                  class="">
+                  custom
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#minlength'
+                  class="">
+                  minLength
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#matches'
+                  class="">
+                  matches
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isalphanumeric'
+                  class="">
+                  isAlphaNumeric
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isinteger'
+                  class="">
+                  isInteger
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isoneof'
+                  class="">
+                  isOneOf
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#required'
+                  class="">
+                  required
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#missing'
+                  class="">
+                  missing
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#greaterthan'
+                  class="">
+                  greaterThan
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#lessthan'
+                  class="">
+                  lessThan
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isoptional'
+                  class="">
+                  isOptional
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pass'
+                  class="">
+                  pass
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#validate'
+                  class="">
+                  validate
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#error'
+                  class="">
+                  error
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='addvalidators'>
+      addValidators
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Register custom validators</p>
+
+
+  <div class='pre p1 fill-light mt0'>addValidators</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>validators</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The validators to add
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>addValidators({<span class="hljs-attr">validateThis</span>: <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> {...})</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='validator'>
+      validator
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns a validator instance</p>
+
+
+  <div class='pre p1 fill-light mt0'>validator(): Validator</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>Validator</code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='custom'>
+      custom
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Define an inline custom validator.  Useful when you have a one-off validation and don't want to register a new validator</p>
+
+
+  <div class='pre p1 fill-light mt0'>custom(v: ValidatorObject)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>v</span> <code class='quiet'>(ValidatorObject)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='minlength'>
+      minLength
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value has a minimum length</p>
+
+
+  <div class='pre p1 fill-light mt0'>minLength(val: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, len: Integer)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>len</span> <code class='quiet'>(Integer)</code>
+	    The minimum allowed length for the value
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='matches'>
+      matches
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value matches the given regular expression</p>
+
+
+  <div class='pre p1 fill-light mt0'>matches(val: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, pattern: Regex, msg: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>pattern</span> <code class='quiet'>(Regex)</code>
+	    The pattern to check the value against
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>msg</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The message to display if the validation fails
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isalphanumeric'>
+      isAlphaNumeric
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value contains only letters and/or numbers</p>
+
+
+  <div class='pre p1 fill-light mt0'>isAlphaNumeric(val: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to diplay in error messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isinteger'>
+      isInteger
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value is an integer</p>
+
+
+  <div class='pre p1 fill-light mt0'>isInteger(val: Any, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(Any)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isoneof'>
+      isOneOf
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value is one of a set of values</p>
+
+
+  <div class='pre p1 fill-light mt0'>isOneOf(val: Any, values: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(Any)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>values</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    A list of the allowed values
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='required'>
+      required
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value has a value</p>
+
+
+  <div class='pre p1 fill-light mt0'>required(val: Any, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(Any)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='missing'>
+      missing
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Ensures that the given value does not exist</p>
+
+
+  <div class='pre p1 fill-light mt0'>missing(val: Any, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(Any)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='greaterthan'>
+      greaterThan
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator:  Ensures that the given value is greater than a set value</p>
+
+
+  <div class='pre p1 fill-light mt0'>greaterThan(val: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, threshold: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>threshold</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The minimum allowed value
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='lessthan'>
+      lessThan
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator:  Ensures that the given value is less than a set value</p>
+
+
+  <div class='pre p1 fill-light mt0'>lessThan(val: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, threshold: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>val</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the value to display in error messages
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>threshold</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The maximum allowed value
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isoptional'>
+      isOptional
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator: Shows that a value is optional, and only runs validators on it if actually present</p>
+
+
+  <div class='pre p1 fill-light mt0'>isOptional(value: Any, callback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(Any)</code>
+	    The value to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Provides a validator as the only argument, and should return the validator after adding any needed validations.  These validations will only run if the given value is present.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pass'>
+      pass
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Validator:  Placeholder validator that always passes.</p>
+
+
+  <div class='pre p1 fill-light mt0'>pass()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='validate'>
+      validate
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Create a custom validator test</p>
+
+
+  <div class='pre p1 fill-light mt0'>validate(test: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>), msg: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, code: Integer): ValidatorObject</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>test</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>))</code>
+	    The test to run for this validator.  Can be either a pre-calculated boolean, a Promise function, or a Promise object
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>msg</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The error message to show if the test fails
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>code</span> <code class='quiet'>(Integer)</code>
+	    The HTTP status code to return if the test fails
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>ValidatorObject</code>:
+        A ValidatorObject is a Promise whose error handler takes a ValidatorError object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='error'>
+      error
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Create a validator error object</p>
+
+
+  <div class='pre p1 fill-light mt0'>error(msg: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, code: Integer): ValidatorObject</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>msg</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The message to display when this error is triggered
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>code</span> <code class='quiet'>(Integer
+            = <code>400</code>)</code>
+	    The HTTP status code to return when this error is triggered
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>ValidatorObject</code>:
+        A standard validator error object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
