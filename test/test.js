@@ -351,19 +351,19 @@ describe('ATP-Validator', () => {
         });
 
         describe("#isOneOf", () => {
-            it('should pass for values that are in the array', () => {
+            it('should pass for values that are in the array', done => {
                 validator().isOneOf(123, [123, 456], "test").then(
                     () => {done();},
                     () => {done(new Error());}
                 );
             });
-            it('should fail for values that are not in the array', () => {
+            it('should fail for values that are not in the array', done => {
                 validator().isOneOf(123, [456, 789], "test").then(
                     () => {done(new Error());},
                     () => {done();}
                 );
             });
-            it('should fail for empty arrays of possible values', () => {
+            it('should fail for empty arrays of possible values', done => {
                 validator().isOneOf(123, [], "test").then(
                     () => {done(new Error());},
                     () => {done();}
