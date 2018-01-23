@@ -29,6 +29,7 @@
   "dependencies": {
     "atp-config": "^0.3.2",
     "atp-sugar": "^0.8.1",
+    "bluebird": "^3.5.1",
     "typeof": "^1.0.0"
   },
   "devDependencies": {

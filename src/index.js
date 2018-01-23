@@ -8,6 +8,7 @@ import validate from './validate';
 import error from './error';
 import {o} from 'atp-sugar';
 import typeOf from 'typeof';
+import Promise from 'bluebird';
 
 export const addValidators = validators => {
     config.setDefaults({validators});
@@ -67,7 +68,7 @@ class Validator
         return this;
     }
 
-    any(names) {
+    ifAny(names) {
         this.current().dependencies = [].concat(names);
         this.current().dependencyType = "any";
         return this;
@@ -121,9 +122,12 @@ class Validator
                 if(set.dependencies.length > 0) {
                     const oldChain = setChain;
                     setChain = () => new Promise((resolve, reject) => {
-                        //TODO:  Handle 'any' condition rather than 'all'
-                        Promise.all(set.dependencies.map(name => this.validatorChains[name]()))
-                            .then(() => {oldChain().then(resolve, reject);})
+                        const f = set.dependencyType === 'all' ? Promise.all : Promise.any;
+                        f(set.dependencies.map(name => this.validatorChains[name]()))
+                            .then(() => {
+                                this.errors = [];
+                                oldChain().then(resolve, reject);
+                            })
                             .catch(reject);
                     });
                 }

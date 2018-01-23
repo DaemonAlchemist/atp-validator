@@ -778,11 +778,55 @@ describe('ATP-Validator', () => {
                 );
         });
 
+        it('should fail if ANY dependencies fail', done => {
+            validator()
+                .check("first")
+                    .isInteger(123, "test")
+                .check("second")
+                    .isInteger("notANumber", "test2")
+                .check("third").if(["first", "second"])
+                    .shouldNotRun(done)
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 400
+                        && errors[0].msg === "test2 must be an integer"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should fail if ALL dependencies fail', done => {
+            validator()
+                .check("first")
+                    .isInteger(123.456, "test")
+                .check("second")
+                    .isInteger("notANumber", "test2")
+                .check("third").if(["first", "second"])
+                    .shouldNotRun(done)
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 2
+                        && errors[0].code === 400
+                        && errors[0].msg === "test must be an integer"
+                        && errors[1].code === 400
+                        && errors[1].msg === "test2 must be an integer"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
         it('should run chains whose dependencies pass', done => {
             validator()
                 .check("first")
                     .isInteger(123, "test")
-                .check("second").if(["first"])
+                .check("second")
+                    .isInteger(456, "test2")
+                .check("third").if(["first", "second"])
                     .customFailureMessage()
                 .then(
                     () => {done(new Error());},
@@ -801,6 +845,88 @@ describe('ATP-Validator', () => {
                 .check("first")
                     .isInteger(123, "test")
                 .check("second").if("first")
+                    .customFailureMessage()
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 401
+                        && errors[0].msg === "This is a custom failure message"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+    });
+
+    describe("#ifAny dependencies", () => {
+        it('should fail if ALL dependencies fail', done => {
+            validator()
+                .check("first")
+                    .isInteger(123.456, "test")
+                .check("second")
+                    .isInteger(456.789, "test2")
+                .check("third").ifAny(["first", "second"])
+                    .shouldNotRun(done)
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 2
+                        && errors[0].code === 400
+                        && errors[0].msg === "test must be an integer"
+                        && errors[1].code === 400
+                        && errors[1].msg === "test2 must be an integer"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should pass if ANY dependencies pass', done => {
+            validator()
+                .check("first")
+                    .isInteger(123, "test")
+                .check("second")
+                    .isInteger("notANumber", "test2")
+                .check("third").ifAny(["first", "second"])
+                    .customFailureMessage()
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 401
+                        && errors[0].msg === "This is a custom failure message"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should pass if ALL dependencies pass', done => {
+            validator()
+                .check("first")
+                    .isInteger(123, "test")
+                .check("second")
+                    .isInteger(456, "test2")
+                .check("third").ifAny(["first", "second"])
+                    .customFailureMessage()
+                .then(
+                    () => {done(new Error());},
+                    errors => {
+                        errors.length === 1
+                        && errors[0].code === 401
+                        && errors[0].msg === "This is a custom failure message"
+                            ? done()
+                            : done(new Error(JSON.stringify(errors)));
+                    }
+                );
+        });
+
+        it('should accept a string if a chain only has one dependency', done => {
+            validator()
+                .check("first")
+                    .isInteger(123, "test")
+                .check("second").ifAny("first")
                     .customFailureMessage()
                 .then(
                     () => {done(new Error());},
