@@ -28,8 +28,8 @@
   "author": "Andrew Wittrock",
   "license": "MIT",
   "dependencies": {
-    "atp-config": "^0.3.2",
-    "atp-sugar": "^0.8.1",
+    "atp-config": "^0.3.5",
+    "atp-sugar": "^0.8.4",
     "bluebird": "^3.5.1",
     "typeof": "^1.0.0"
   },
@@ -38,8 +38,8 @@
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
-    "dependency-check": "^2.9.1",
+    "dependency-check": "^3.0.0",
     "documentation": "^5.3.5",
-    "mocha": "^4.0.1"
+    "mocha": "^5.0.0"
   }
 }
